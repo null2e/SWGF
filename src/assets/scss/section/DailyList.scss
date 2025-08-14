@@ -1,0 +1,117 @@
+/* ====== DailyList (고정값: 버튼 149px / 1st block 191px) ====== */
+.DailyList-wrapper {
+  width: 393px;
+  min-height: 844px;
+  margin: 0 auto;
+  background-color: #c6d0e0;
+  font-family: 'Pretendard', sans-serif;
+  position: relative;   /* 기준 요소 */
+  border-radius: 32px;
+  overflow: hidden;
+
+  .DailyList-page { padding: 0 0 40px; }
+
+  /* 헤더 */
+  .page-header {
+    position: absolute;
+    top: 78px; left: 0; right: 0;
+    height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 5;
+
+    .title { font-size: 18px; font-weight: 700; line-height: 24px; margin: 0; }
+    .back  { position: absolute; left: 27px;  width: 12px; height: 15px; cursor: pointer; }
+    .gear  { position: absolute; right: 26px; width: 20px; height: 20px; cursor: pointer; }
+  }
+
+  /* 날짜줄: #root 기준 110px (버튼/박스 사이에 위치) */
+  .date-and-action {
+    position: absolute;
+    top: 110px; left: 0; right: 0;
+    margin: 0;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; z-index: 10;
+
+    .date-text { font-size: 12px; line-height: 16px; font-weight: 400; margin: 0; }
+
+    /* ✅ 카테고리 버튼: 부모(날짜줄) 기준 39px → #root 기준 149px */
+    .category-open-btn {
+      position: absolute;
+      top: 39px;
+      right: 24px;
+      width: 76px; height: 32px;
+      border-radius: 10px;
+      padding: 0 10px;
+      font-size: 12px; font-weight: 700;
+      background: #c6d0e0; border: 1px solid #000;
+      display: inline-flex; align-items: center; justify-content: center;
+      z-index: 20;
+      transform: none;
+    }
+  }
+
+  /* 카테고리 박스 공통 규격 */
+  .dl-category-block {
+    width: 350px; height: 31px;
+    margin: 0 auto;
+    background: #F2F2F2;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 5px;
+    display: flex; align-items: center;
+    padding: 0 36px 0 12px;
+    position: relative; /* ← 이게 나중에 덮어썼던 범인 */
+    box-sizing: border-box;
+  }
+
+  .category-header { width: 100%; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .category-title  { display: flex; align-items: center; gap: 8px; font-weight: 600; line-height: 16px; margin: 0; }
+
+  .color-dot { width: 16px; height: 16px; border-radius: 50%; border: none; cursor: pointer; }
+  .add-button {
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+    width: 24px; height: 24px; border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 6px; background: #fff; line-height: 22px; text-align: center; cursor: pointer;
+  }
+
+  /* 간격 규칙 */
+  .dl-category-group .dl-category-block { margin-bottom: 30px; }
+  .dl-category-group:not(:has(.task-item)) { margin-bottom: 50px; }
+  .dl-category-group:not(:has(.task-item)) .dl-category-block { margin-bottom: 0; }
+  .dl-category-group:has(.task-item) { margin-bottom: 0; }
+
+  /* 태스크 라인 */
+  .task-item {
+    width: 350px; margin: 0 auto 8px;
+    display: flex; align-items: center; gap: 8px;
+    .task-title { line-height: 20px; }
+  }
+
+  ul, ol { list-style: none; margin: 0; padding: 0; }
+  .task-lock { margin-left: 6px; opacity: .6; font-size: 14px; }
+}
+
+/* ===== 팝업 공통 ===== */
+.overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+.overlay .public { display: flex; align-items: center; justify-content: flex-start; gap: 8px; text-align: left; }
+.overlay .public input[type="checkbox"] { margin: 0 8px 0 0; }
+
+/* =========================================
+   🔥 덮어쓰기 전용 (파일의 '마지막'에 유지!)
+   ========================================= */
+
+/* ✅ 첫 번째 카테고리 “박스”를 #root 기준 191px에 고정
+   (뒤에서 선언해 position:relative; 를 이 규칙으로 덮음) */
+.DailyList-wrapper .dl-category-group:first-of-type > .dl-category-block {
+  position: absolute !important;
+  top: 191px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 350px !important;
+  z-index: 11;
+}
+
+/* 박스를 떠있게 했으니, 첫 그룹 내용은 박스 아래로 내려오도록 여백 확보
+   31(박스 높이) + 30(박스→첫 투두 간격) = 61 */
+.DailyList-wrapper .dl-category-group:first-of-type {
+  padding-top: 61px;
+}
